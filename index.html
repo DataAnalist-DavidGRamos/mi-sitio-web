@@ -269,6 +269,70 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border-light);display:flex;a
 @keyframes fl18{0%{transform:translate(0px,0px) rotate(0deg);}33%{transform:translate(31px,-39px) rotate(27deg);}66%{transform:translate(-21px,-78px) rotate(-27deg);}100%{transform:translate(15px,-117px) rotate(0deg);}}
 @keyframes fl19{0%{transform:translate(0px,0px) rotate(0deg);}33%{transform:translate(40px,-45px) rotate(28deg);}66%{transform:translate(-27px,-90px) rotate(-28deg);}100%{transform:translate(20px,-135px) rotate(0deg);}}
 @keyframes fl20{0%{transform:translate(0px,0px) rotate(0deg);}33%{transform:translate(60px,-80px) rotate(15deg);}66%{transform:translate(-50px,-140px) rotate(-10deg);}100%{transform:translate(30px,-200px) rotate(5deg);}}
+
+
+/* ── Floating Contact FAB ── */
+#fab-contact{
+  position:fixed;bottom:2rem;right:2rem;z-index:99990;
+  display:flex;flex-direction:column-reverse;align-items:center;gap:.65rem;
+}
+#fab-main{
+  width:62px;height:62px;border-radius:50%;
+  background:linear-gradient(135deg,#C8A96E,#E2C88A);
+  border:none;color:#0B1929;font-size:1.55rem;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 28px rgba(200,169,110,.55),0 0 0 0 rgba(200,169,110,.4);
+  cursor:none;transition:transform .3s,background .3s;
+  animation:fab-pulse 2.8s infinite;
+  position:relative;z-index:2;
+}
+#fab-main:hover{transform:scale(1.1);}
+@keyframes fab-pulse{
+  0%,100%{box-shadow:0 6px 28px rgba(200,169,110,.4),0 0 0 0 rgba(200,169,110,.3);}
+  60%{box-shadow:0 6px 28px rgba(200,169,110,.55),0 0 0 14px rgba(200,169,110,0);}
+}
+.fab-items{
+  display:flex;flex-direction:column-reverse;align-items:center;gap:.6rem;
+  transition:opacity .35s cubic-bezier(.4,0,.2,1),transform .35s cubic-bezier(.4,0,.2,1);
+  opacity:0;transform:translateY(20px) scale(.85);pointer-events:none;
+}
+.fab-items.open{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
+/* staggered entrance */
+.fab-items.open .fab-item:nth-child(1){transition-delay:.04s;}
+.fab-items.open .fab-item:nth-child(2){transition-delay:.08s;}
+.fab-items.open .fab-item:nth-child(3){transition-delay:.12s;}
+.fab-items.open .fab-item:nth-child(4){transition-delay:.16s;}
+
+.fab-item{position:relative;display:flex;align-items:center;gap:0;}
+.fab-item a{
+  width:50px;height:50px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.25rem;color:#fff;text-decoration:none;
+  box-shadow:0 4px 16px rgba(0,0,0,.45);
+  transition:transform .22s,box-shadow .22s;
+  cursor:none;border:2.5px solid rgba(255,255,255,.2);
+}
+.fab-item a:hover{transform:scale(1.18) translateX(-4px);box-shadow:0 8px 24px rgba(0,0,0,.55);}
+.fab-tip{
+  position:absolute;right:58px;
+  background:rgba(11,25,41,.96);border:1px solid rgba(200,169,110,.3);
+  color:var(--text-primary);font-family:'DM Mono',monospace;
+  font-size:.58rem;letter-spacing:.07em;white-space:nowrap;
+  padding:.35rem .8rem;border-radius:6px;pointer-events:none;
+  opacity:0;transition:opacity .18s;box-shadow:0 4px 14px rgba(0,0,0,.45);
+}
+.fab-tip::after{
+  content:'';position:absolute;top:50%;right:-6px;transform:translateY(-50%);
+  border:6px solid transparent;border-left-color:rgba(200,169,110,.3);
+}
+.fab-item:hover .fab-tip{opacity:1;}
+
+/* Individual brand colors */
+.fab-wa{background:linear-gradient(135deg,#25D366,#1DA851);}
+.fab-li{background:linear-gradient(135deg,#0077B5,#004471);}
+.fab-gh{background:linear-gradient(135deg,#24292e,#444d56);}
+.fab-em{background:linear-gradient(135deg,#EA4335,#B5271E);}
+
 </style>
 </head>
 <body>
@@ -307,7 +371,6 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border-light);display:flex;a
     <li><a href="#proyectos">Proyectos</a></li>
     <li><a href="#audit">Auditoría</a></li>
     <li><a href="#educacion">Formación</a></li>
-    <li><a href="#contacto">Contacto</a></li>
   </ul>
   <div class="nav-ctrl">
     <button class="ncb" id="langBtn">EN</button>
@@ -702,13 +765,14 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border-light);display:flex;a
   <div class="section-header reveal"><span class="section-num">05</span><div class="section-line"></div><h2 class="section-title">Portafolio de <span>Proyectos</span></h2></div>
   <a href="https://github.com/DataAnalist-DavidGRamos" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.12em;color:rgba(255,255,255,.65);margin-bottom:3rem;text-transform:uppercase"><i class="fab fa-github" style="color:var(--gold)"></i> github.com/DataAnalist-DavidGRamos</a>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem" class="reveal">
-    <div class="project-card"><div class="project-icon">🧹</div><div class="project-type">Data Wrangling · Google Sheets</div><div class="project-name">P1 — Limpieza de Datos VentaExpress</div><p class="project-desc">Datos caóticos de ventas transformados en informes ejecutivos. Identificación de errores, limpieza y visualizaciones accionables.</p><div class="project-highlight"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMUQ2RjQyIi8+CjxyZWN0IHg9IjgiIHk9IjgiIHdpZHRoPSI0MCIgaGVpZ2h0PSI1MiIgcng9IjMiIGZpbGw9IiMyMUEzNjYiLz4KPHBhdGggZD0iTTE2LDE4IEwyOCwzNiBNMjgsMTggTDE2LDM2IiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxyZWN0IHg9IjQ0IiB5PSI4IiB3aWR0aD0iMjgiIGhlaWdodD0iNjQiIHJ4PSIzIiBmaWxsPSIjRkZGRkZGIiBvcGFjaXR5PSIuOTUiLz4KPHJlY3QgeD0iNDQiIHk9IjgiIHdpZHRoPSIyOCIgaGVpZ2h0PSIxMCIgcng9IjIiIGZpbGw9IiMxRDZGNDIiLz4KPGxpbmUgeDE9IjQ0IiB5MT0iMjYiIHgyPSI3MiIgeTI9IjI2IiBzdHJva2U9IiNDQ0MiIHN0cm9rZS13aWR0aD0iLjgiLz4KPGxpbmUgeDE9IjQ0IiB5MT0iMzYiIHgyPSI3MiIgeTI9IjM2IiBzdHJva2U9IiNDQ0MiIHN0cm9rZS13aWR0aD0iLjgiLz4KPGxpbmUgeDE9IjQ0IiB5MT0iNDYiIHgyPSI3MiIgeTI9IjQ2IiBzdHJva2U9IiNDQ0MiIHN0cm9rZS13aWR0aD0iLjgiLz4KPGxpbmUgeDE9IjQ0IiB5MT0iNTYiIHgyPSI3MiIgeTI9IjU2IiBzdHJva2U9IiNDQ0MiIHN0cm9rZS13aWR0aD0iLjgiLz4KPGxpbmUgeDE9IjU4IiB5MT0iMTgiIHgyPSI1OCIgeTI9IjcyIiBzdHJva2U9IiNDQ0MiIHN0cm9rZS13aWR0aD0iLjgiLz4KPC9zdmc+" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">Context → Finding → Implication · KPIs ejecutivos</div><div class="project-tags"><span class="project-tag">Google Sheets</span><span class="project-tag">Data Wrangling</span><span class="project-tag">KPIs</span></div><a href="https://github.com/DataAnalist-DavidGRamos/Proyecto-1-Limpieza-y-resumen-de-datos-en-Google-Sheets" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
-    <div class="project-card"><div class="project-icon">🏪</div><div class="project-type">Retail Analytics · <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMWExYTJlIi8+CjxyZWN0IHg9IjEyIiB5PSI0MiIgd2lkdGg9IjE0IiBoZWlnaHQ9IjI4IiByeD0iMyIgZmlsbD0iI0YyQzgxMSIvPgo8cmVjdCB4PSIzMCIgeT0iMjgiIHdpZHRoPSIxNCIgaGVpZ2h0PSI0MiIgcng9IjMiIGZpbGw9IiNGMkM4MTEiIG9wYWNpdHk9Ii44NSIvPgo8cmVjdCB4PSI0OCIgeT0iMTQiIHdpZHRoPSIxNCIgaGVpZ2h0PSI1NiIgcng9IjMiIGZpbGw9IiNGMkM4MTEiIG9wYWNpdHk9Ii43Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI3OCIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNyIgZm9udC13ZWlnaHQ9IjkwMCIgZmlsbD0iI0YyQzgxMSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPlBPV0VSIEJJPC90ZXh0Pgo8L3N2Zz4=" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMWExYTJlIi8+CjxyZWN0IHg9IjEyIiB5PSI0MiIgd2lkdGg9IjE0IiBoZWlnaHQ9IjI4IiByeD0iMyIgZmlsbD0iI0YyQzgxMSIvPgo8cmVjdCB4PSIzMCIgeT0iMjgiIHdpZHRoPSIxNCIgaGVpZ2h0PSI0MiIgcng9IjMiIGZpbGw9IiNGMkM4MTEiIG9wYWNpdHk9Ii44NSIvPgo8cmVjdCB4PSI0OCIgeT0iMTQiIHdpZHRoPSIxNCIgaGVpZ2h0PSI1NiIgcng9IjMiIGZpbGw9IiNGMkM4MTEiIG9wYWNpdHk9Ii43Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI3OCIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNyIgZm9udC13ZWlnaHQ9IjkwMCIgZmlsbD0iI0YyQzgxMSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPlBPV0VSIEJJPC90ZXh0Pgo8L3N2Zz4=" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">Power BI</div><div class="project-name">P2 — Resumen Ejecutivo Walmart</div><p class="project-desc">Ventas Walmart → decisiones de presupuesto e inventario. KPIs: ventas por m² y participación por departamento.</p><div class="project-highlight"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMWExYTJlIi8+CjxyZWN0IHg9IjEyIiB5PSI0MiIgd2lkdGg9IjE0IiBoZWlnaHQ9IjI4IiByeD0iMyIgZmlsbD0iI0YyQzgxMSIvPgo8cmVjdCB4PSIzMCIgeT0iMjgiIHdpZHRoPSIxNCIgaGVpZ2h0PSI0MiIgcng9IjMiIGZpbGw9IiNGMkM4MTEiIG9wYWNpdHk9Ii44NSIvPgo8cmVjdCB4PSI0OCIgeT0iMTQiIHdpZHRoPSIxNCIgaGVpZ2h0PSI1NiIgcng9IjMiIGZpbGw9IiNGMkM4MTEiIG9wYWNpdHk9Ii43Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI3OCIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNyIgZm9udC13ZWlnaHQ9IjkwMCIgZmlsbD0iI0YyQzgxMSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPlBPV0VSIEJJPC90ZXh0Pgo8L3N2Zz4=" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">Ventas/m² · Participación departamento · Dashboard interactivo</div><div class="project-tags"><span class="project-tag"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMWExYTJlIi8+CjxyZWN0IHg9IjEyIiB5PSI0MiIgd2lkdGg9IjE0IiBoZWlnaHQ9IjI4IiByeD0iMyIgZmlsbD0iI0YyQzgxMSIvPgo8cmVjdCB4PSIzMCIgeT0iMjgiIHdpZHRoPSIxNCIgaGVpZ2h0PSI0MiIgcng9IjMiIGZpbGw9IiNGMkM4MTEiIG9wYWNpdHk9Ii44NSIvPgo8cmVjdCB4PSI0OCIgeT0iMTQiIHdpZHRoPSIxNCIgaGVpZ2h0PSI1NiIgcng9IjMiIGZpbGw9IiNGMkM4MTEiIG9wYWNpdHk9Ii43Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI3OCIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNyIgZm9udC13ZWlnaHQ9IjkwMCIgZmlsbD0iI0YyQzgxMSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPlBPV0VSIEJJPC90ZXh0Pgo8L3N2Zz4=" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">Power BI</span><span class="project-tag">KPIs</span><span class="project-tag">Data Wrangling</span></div><a href="https://github.com/DataAnalist-DavidGRamos/Proyecto-2-Resumen-Ejecutivo-de-Ventas-Walmart" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
-    <div class="project-card"><div class="project-icon">🚴</div><div class="project-type">Financial Analytics · <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMzM2NzkxIi8+CjxlbGxpcHNlIGN4PSI0MCIgY3k9IjIyIiByeD0iMjIiIHJ5PSI4IiBmaWxsPSIjRkZGRkZGIiBvcGFjaXR5PSIuOSIvPgo8cmVjdCB4PSIxOCIgeT0iMjIiIHdpZHRoPSI0NCIgaGVpZ2h0PSIxNiIgZmlsbD0iIzMzNjc5MSIvPgo8ZWxsaXBzZSBjeD0iNDAiIGN5PSIzOCIgcng9IjIyIiByeT0iOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iLjciLz4KPHJlY3QgeD0iMTgiIHk9IjM4IiB3aWR0aD0iNDQiIGhlaWdodD0iMTYiIGZpbGw9IiMzMzY3OTEiLz4KPGVsbGlwc2UgY3g9IjQwIiBjeT0iNTQiIHJ4PSIyMiIgcnk9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9Ii43Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI3MiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNGRkZGRkYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5TUUw8L3RleHQ+Cjwvc3ZnPg==" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">SQL · ROI</div><div class="project-name">P3 — Desempeño Financiero AdventureWorks</div><p class="project-desc">Análisis financiero estratégico con SQL sobre AdventureWorks 2017. ROI por país, ingresos, costos y margen.</p><div class="project-highlight"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMzM2NzkxIi8+CjxlbGxpcHNlIGN4PSI0MCIgY3k9IjIyIiByeD0iMjIiIHJ5PSI4IiBmaWxsPSIjRkZGRkZGIiBvcGFjaXR5PSIuOSIvPgo8cmVjdCB4PSIxOCIgeT0iMjIiIHdpZHRoPSI0NCIgaGVpZ2h0PSIxNiIgZmlsbD0iIzMzNjc5MSIvPgo8ZWxsaXBzZSBjeD0iNDAiIGN5PSIzOCIgcng9IjIyIiByeT0iOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iLjciLz4KPHJlY3QgeD0iMTgiIHk9IjM4IiB3aWR0aD0iNDQiIGhlaWdodD0iMTYiIGZpbGw9IiMzMzY3OTEiLz4KPGVsbGlwc2UgY3g9IjQwIiBjeT0iNTQiIHJ4PSIyMiIgcnk9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9Ii43Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI3MiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNGRkZGRkYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5TUUw8L3RleHQ+Cjwvc3ZnPg==" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">EE.UU. → 75.75% ROI · Prompt Engineering</div><div class="project-tags"><span class="project-tag"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMzM2NzkxIi8+CjxlbGxpcHNlIGN4PSI0MCIgY3k9IjIyIiByeD0iMjIiIHJ5PSI4IiBmaWxsPSIjRkZGRkZGIiBvcGFjaXR5PSIuOSIvPgo8cmVjdCB4PSIxOCIgeT0iMjIiIHdpZHRoPSI0NCIgaGVpZ2h0PSIxNiIgZmlsbD0iIzMzNjc5MSIvPgo8ZWxsaXBzZSBjeD0iNDAiIGN5PSIzOCIgcng9IjIyIiByeT0iOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iLjciLz4KPHJlY3QgeD0iMTgiIHk9IjM4IiB3aWR0aD0iNDQiIGhlaWdodD0iMTYiIGZpbGw9IiMzMzY3OTEiLz4KPGVsbGlwc2UgY3g9IjQwIiBjeT0iNTQiIHJ4PSIyMiIgcnk9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9Ii43Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI3MiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNGRkZGRkYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5TUUw8L3RleHQ+Cjwvc3ZnPg==" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">SQL</span><span class="project-tag">ROI</span><span class="project-tag">Prompt Engineering</span></div><a href="https://github.com/DataAnalist-DavidGRamos/Proyecto-3-An-lisis-del-desempe-o-financiero-con-SQL---Resumen-ejecutivo" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
-    <div class="project-card"><div class="project-icon">🛒</div><div class="project-type">Funnel Analysis · Cohortes · <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMzM2NzkxIi8+CjxlbGxpcHNlIGN4PSI0MCIgY3k9IjIyIiByeD0iMjIiIHJ5PSI4IiBmaWxsPSIjRkZGRkZGIiBvcGFjaXR5PSIuOSIvPgo8cmVjdCB4PSIxOCIgeT0iMjIiIHdpZHRoPSI0NCIgaGVpZ2h0PSIxNiIgZmlsbD0iIzMzNjc5MSIvPgo8ZWxsaXBzZSBjeD0iNDAiIGN5PSIzOCIgcng9IjIyIiByeT0iOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iLjciLz4KPHJlY3QgeD0iMTgiIHk9IjM4IiB3aWR0aD0iNDQiIGhlaWdodD0iMTYiIGZpbGw9IiMzMzY3OTEiLz4KPGVsbGlwc2UgY3g9IjQwIiBjeT0iNTQiIHJ4PSIyMiIgcnk9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9Ii43Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI3MiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNGRkZGRkYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5TUUw8L3RleHQ+Cjwvc3ZnPg==" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMzM2NzkxIi8+CjxlbGxpcHNlIGN4PSI0MCIgY3k9IjIyIiByeD0iMjIiIHJ5PSI4IiBmaWxsPSIjRkZGRkZGIiBvcGFjaXR5PSIuOSIvPgo8cmVjdCB4PSIxOCIgeT0iMjIiIHdpZHRoPSI0NCIgaGVpZ2h0PSIxNiIgZmlsbD0iIzMzNjc5MSIvPgo8ZWxsaXBzZSBjeD0iNDAiIGN5PSIzOCIgcng9IjIyIiByeT0iOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iLjciLz4KPHJlY3QgeD0iMTgiIHk9IjM4IiB3aWR0aD0iNDQiIGhlaWdodD0iMTYiIGZpbGw9IiMzMzY3OTEiLz4KPGVsbGlwc2UgY3g9IjQwIiBjeT0iNTQiIHJ4PSIyMiIgcnk9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9Ii43Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI3MiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNGRkZGRkYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5TUUw8L3RleHQ+Cjwvc3ZnPg==" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">SQL</div><div class="project-name">P4 — Embudo &amp; Retención MercadoLibre</div><p class="project-desc">Embudo de conversión y retención para MercadoLibre con SQL. Detección de punto de fuga crítica y análisis de cohortes.</p><div class="project-highlight">🔍 85.68% fuga en punto crítico · Cohortes por mes</div><div class="project-tags"><span class="project-tag"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMzM2NzkxIi8+CjxlbGxpcHNlIGN4PSI0MCIgY3k9IjIyIiByeD0iMjIiIHJ5PSI4IiBmaWxsPSIjRkZGRkZGIiBvcGFjaXR5PSIuOSIvPgo8cmVjdCB4PSIxOCIgeT0iMjIiIHdpZHRoPSI0NCIgaGVpZ2h0PSIxNiIgZmlsbD0iIzMzNjc5MSIvPgo8ZWxsaXBzZSBjeD0iNDAiIGN5PSIzOCIgcng9IjIyIiByeT0iOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iLjciLz4KPHJlY3QgeD0iMTgiIHk9IjM4IiB3aWR0aD0iNDQiIGhlaWdodD0iMTYiIGZpbGw9IiMzMzY3OTEiLz4KPGVsbGlwc2UgY3g9IjQwIiBjeT0iNTQiIHJ4PSIyMiIgcnk9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9Ii43Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI3MiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNGRkZGRkYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5TUUw8L3RleHQ+Cjwvc3ZnPg==" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">SQL</span><span class="project-tag">Funnel</span><span class="project-tag">Cohortes</span></div><a href="https://github.com/DataAnalist-DavidGRamos/proyecto-4-analisis-embudo-mercadolibre-sql" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
-    <div class="project-card"><div class="project-icon">🏙️</div><div class="project-type">Urban Analytics · <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMWUyOTNiIi8+CjxwYXRoIGQ9Ik00MCw4IEMyOCw4IDI5LDEzIDI5LDEzIEwyOSwyMyBMNDEsMjMgTDQxLDI2IEwyMiwyNiBDMjIsMjYgMTUsMjUgMTUsMzggQzE1LDUxIDIxLDUwIDIxLDUwIEwyNSw1MCBMMjUsNDQgQzI1LDQ0IDI1LDM3IDMyLDM3IEw0OCwzNyBDNDgsMzcgNTQsMzcgNTQsMzEgTDU0LDE3IEM1NCwxNyA1NSw4IDQwLDhaIiBmaWxsPSIjMzc3NkFCIi8+CjxwYXRoIGQ9Ik00MCw3MiBDNTIsNzIgNTEsNjcgNTEsNjcgTDUxLDU3IEwzOSw1NyBMMzksNTQgTDU4LDU0IEM1OCw1NCA2NSw1NSA2NSw0MiBDNjUsMjkgNTksMzAgNTksMzAgTDU1LDMwIEw1NSwzNiBDNTUsMzYgNTUsNDMgNDgsNDMgTDMyLDQzIEMzMiw0MyAyNiw0MyAyNiw0OSBMMjYsNjMgQzI2LDYzIDI1LDcyIDQwLDcyWiIgZmlsbD0iI0ZGRDQzQiIvPgo8Y2lyY2xlIGN4PSIzNiIgY3k9IjE4IiByPSIzIiBmaWxsPSIjRkZGRkZGIi8+CjxjaXJjbGUgY3g9IjQ0IiBjeT0iNjIiIHI9IjMiIGZpbGw9IiMxZTI5M2IiLz4KPC9zdmc+" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">Python · LATAM</div><div class="project-name">P5 — Movilidad Urbana LATAM</div><p class="project-desc">Movilidad urbana y productividad económica en ciudades de LATAM con Python. Correlación entre patrones de transporte e indicadores económicos.</p><div class="project-highlight"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMWUyOTNiIi8+CjxwYXRoIGQ9Ik00MCw4IEMyOCw4IDI5LDEzIDI5LDEzIEwyOSwyMyBMNDEsMjMgTDQxLDI2IEwyMiwyNiBDMjIsMjYgMTUsMjUgMTUsMzggQzE1LDUxIDIxLDUwIDIxLDUwIEwyNSw1MCBMMjUsNDQgQzI1LDQ0IDI1LDM3IDMyLDM3IEw0OCwzNyBDNDgsMzcgNTQsMzcgNTQsMzEgTDU0LDE3IEM1NCwxNyA1NSw4IDQwLDhaIiBmaWxsPSIjMzc3NkFCIi8+CjxwYXRoIGQ9Ik00MCw3MiBDNTIsNzIgNTEsNjcgNTEsNjcgTDUxLDU3IEwzOSw1NyBMMzksNTQgTDU4LDU0IEM1OCw1NCA2NSw1NSA2NSw0MiBDNjUsMjkgNTksMzAgNTksMzAgTDU1LDMwIEw1NSwzNiBDNTUsMzYgNTUsNDMgNDgsNDMgTDMyLDQzIEMzMiw0MyAyNiw0MyAyNiw0OSBMMjYsNjMgQzI2LDYzIDI1LDcyIDQwLDcyWiIgZmlsbD0iI0ZGRDQzQiIvPgo8Y2lyY2xlIGN4PSIzNiIgY3k9IjE4IiByPSIzIiBmaWxsPSIjRkZGRkZGIi8+CjxjaXJjbGUgY3g9IjQ0IiBjeT0iNjIiIHI9IjMiIGZpbGw9IiMxZTI5M2IiLz4KPC9zdmc+" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">Python · <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMTMwNzU0Ii8+CjxyZWN0IHg9IjIyIiB5PSIxMCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjM4IiByeD0iNiIgZmlsbD0iI0U3MDQ4OCIvPgo8cmVjdCB4PSIyMiIgeT0iNTQiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxNiIgcng9IjYiIGZpbGw9IiNFNzA0ODgiIG9wYWNpdHk9Ii41Ii8+CjxyZWN0IHg9IjQ2IiB5PSIzMiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjM4IiByeD0iNiIgZmlsbD0iI0U3MDQ4OCIvPgo8cmVjdCB4PSI0NiIgeT0iMTAiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxNiIgcng9IjYiIGZpbGw9IiNFNzA0ODgiIG9wYWNpdHk9Ii41Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI3NyIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI0ZGRkZGRiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPnBhbmRhczwvdGV4dD4KPC9zdmc+" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">Pandas · NumPy · Seaborn · Matplotlib</div><div class="project-tags"><span class="project-tag"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMWUyOTNiIi8+CjxwYXRoIGQ9Ik00MCw4IEMyOCw4IDI5LDEzIDI5LDEzIEwyOSwyMyBMNDEsMjMgTDQxLDI2IEwyMiwyNiBDMjIsMjYgMTUsMjUgMTUsMzggQzE1LDUxIDIxLDUwIDIxLDUwIEwyNSw1MCBMMjUsNDQgQzI1LDQ0IDI1LDM3IDMyLDM3IEw0OCwzNyBDNDgsMzcgNTQsMzcgNTQsMzEgTDU0LDE3IEM1NCwxNyA1NSw4IDQwLDhaIiBmaWxsPSIjMzc3NkFCIi8+CjxwYXRoIGQ9Ik00MCw3MiBDNTIsNzIgNTEsNjcgNTEsNjcgTDUxLDU3IEwzOSw1NyBMMzksNTQgTDU4LDU0IEM1OCw1NCA2NSw1NSA2NSw0MiBDNjUsMjkgNTksMzAgNTksMzAgTDU1LDMwIEw1NSwzNiBDNTUsMzYgNTUsNDMgNDgsNDMgTDMyLDQzIEMzMiw0MyAyNiw0MyAyNiw0OSBMMjYsNjMgQzI2LDYzIDI1LDcyIDQwLDcyWiIgZmlsbD0iI0ZGRDQzQiIvPgo8Y2lyY2xlIGN4PSIzNiIgY3k9IjE4IiByPSIzIiBmaWxsPSIjRkZGRkZGIi8+CjxjaXJjbGUgY3g9IjQ0IiBjeT0iNjIiIHI9IjMiIGZpbGw9IiMxZTI5M2IiLz4KPC9zdmc+" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">Python</span><span class="project-tag">NumPy</span><span class="project-tag">Seaborn</span></div><a href="https://github.com/DataAnalist-DavidGRamos" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
+    <div class="project-card"><div class="project-icon">🧹</div><div class="project-type">Data Wrangling · Google Sheets</div><div class="project-name">P1 — Limpieza de Datos VentaExpress</div><p class="project-desc">Datos caóticos de ventas transformados en informes ejecutivos. Identificación de errores, limpieza y visualizaciones accionables.</p><div class="project-highlight">📊 Context → Finding → Implication · KPIs ejecutivos</div><div class="project-tags"><span class="project-tag">Google Sheets</span><span class="project-tag">Data Wrangling</span><span class="project-tag">KPIs</span></div><a href="https://github.com/DataAnalist-DavidGRamos/Proyecto-1-Limpieza-y-resumen-de-datos-en-Google-Sheets" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
+    <div class="project-card"><div class="project-icon">🏪</div><div class="project-type">Retail Analytics · Power BI</div><div class="project-name">P2 — Resumen Ejecutivo Walmart</div><p class="project-desc">Ventas Walmart → decisiones de presupuesto e inventario. KPIs: ventas por m² y participación por departamento.</p><div class="project-highlight">📊 Ventas/m² · Participación departamento · Dashboard interactivo</div><div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">KPIs</span><span class="project-tag">Data Wrangling</span></div><a href="https://github.com/DataAnalist-DavidGRamos/Proyecto-2-Resumen-Ejecutivo-de-Ventas-Walmart" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
+    <div class="project-card"><div class="project-icon">🚴</div><div class="project-type">Financial Analytics · SQL · ROI</div><div class="project-name">P3 — Desempeño Financiero AdventureWorks</div><p class="project-desc">Análisis financiero estratégico con SQL sobre AdventureWorks 2017. ROI por país, ingresos, costos y margen.</p><div class="project-highlight">📈 EE.UU. → 75.75% ROI · Prompt Engineering</div><div class="project-tags"><span class="project-tag">SQL</span><span class="project-tag">ROI</span><span class="project-tag">Prompt Engineering</span></div><a href="https://github.com/DataAnalist-DavidGRamos/Proyecto-3-An-lisis-del-desempe-o-financiero-con-SQL---Resumen-ejecutivo" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
+    <div class="project-card"><div class="project-icon">🛒</div><div class="project-type">Funnel Analysis · Cohortes · SQL</div><div class="project-name">P4 — Embudo &amp; Retención MercadoLibre</div><p class="project-desc">Embudo de conversión y retención para MercadoLibre con SQL. Detección de punto de fuga crítica y análisis de cohortes.</p><div class="project-highlight">🔍 85.68% fuga en punto crítico · Cohortes por mes</div><div class="project-tags"><span class="project-tag">SQL</span><span class="project-tag">Funnel</span><span class="project-tag">Cohortes</span></div><a href="https://github.com/DataAnalist-DavidGRamos/proyecto-4-analisis-embudo-mercadolibre-sql" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
+    <div class="project-card"><div class="project-icon">🏙️</div><div class="project-type">Urban Analytics · Python · LATAM</div><div class="project-name">P5 — Movilidad Urbana LATAM</div><p class="project-desc">Movilidad urbana y productividad económica en ciudades de LATAM con Python. Correlación entre patrones de transporte e indicadores económicos.</p><div class="project-highlight">📊 Python · Pandas · NumPy · Seaborn · Matplotlib</div><div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">NumPy</span><span class="project-tag">Seaborn</span></div><a href="https://github.com/DataAnalist-DavidGRamos" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
+    <div class="project-card"><div class="project-icon">📡</div><div class="project-type">Customer Analytics · Telecomunicaciones</div><div class="project-name">P6 — ConnectaTel: Segmentación Clientes</div><p class="project-desc">Comportamiento de clientes ConnectaTel (LATAM). Power users, patrones de consumo y recomendaciones para planes.</p><div class="project-highlight">📊 Segmentación: Bajo/Medio/Alto · Power Users</div><div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Pandas</span><span class="project-tag">Seaborn</span><span class="project-tag">Jupyter</span></div><a href="https://github.com/DataAnalist-DavidGRamos/Proyecto-6---An-lisis-de-una-empresa-de-telecomunicaciones" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
     <div class="project-card"><div class="project-icon">🛍️</div><div class="project-type">EDA Correlacional · Retail Analytics · Python</div><div class="project-name">P7 — NovaRetail: Análisis Exploratorio Correlacional</div><p class="project-desc">Análisis correlacional profundo del comportamiento de clientes de una plataforma retail. Revela qué variables realmente impulsan el ingreso anual — y cuáles son una ilusión de impacto.</p><div class="project-highlight">📌 Correlación compras/mes ↔ ingreso_anual: r = 0.97 · La hiper-recurrencia es el motor del dinero</div><div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">EDA</span><span class="project-tag">Correlación</span><span class="project-tag">Pandas</span></div><div style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem"><div style="background:rgba(255,69,58,.07);border-left:2px solid #FF453A;padding:.5rem .8rem;font-size:.72rem;color:#A8B8CC;line-height:1.55"><strong style="color:#FF453A">🚨 Anomalía crítica:</strong> Churn 15% — los clientes que más compran son los que se van (power buyers en fuga por fricciones post-venta).</div><div style="background:rgba(77,168,218,.07);border-left:2px solid #4DA8DA;padding:.5rem .8rem;font-size:.72rem;color:#A8B8CC;line-height:1.55"><strong style="color:#4DA8DA">📱 Mobile-First:</strong> 65% del tráfico desde móvil. La inversión #1 debe ser una App con UX impecable.</div><div style="background:rgba(200,169,110,.07);border-left:2px solid var(--gold);padding:.5rem .8rem;font-size:.72rem;color:#A8B8CC;line-height:1.55"><strong style="color:var(--gold)">📢 Ilusión publicitaria:</strong> publicidad atrae visitas (r=0.58) pero colapsa en conversión a ingreso (r=0.20).</div></div><a href="https://github.com/DataAnalist-DavidGRamos/S8_Student-Version-Project-NovaRetail" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
-    <div class="project-card"><div class="project-icon">📡</div><div class="project-type">Customer Analytics · Telecomunicaciones</div><div class="project-name">P6 — ConnectaTel: Segmentación Clientes</div><p class="project-desc">Comportamiento de clientes ConnectaTel (LATAM). Power users, patrones de consumo y recomendaciones para planes.</p><div class="project-highlight"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMWUyOTNiIi8+CjxwYXRoIGQ9Ik00MCw4IEMyOCw4IDI5LDEzIDI5LDEzIEwyOSwyMyBMNDEsMjMgTDQxLDI2IEwyMiwyNiBDMjIsMjYgMTUsMjUgMTUsMzggQzE1LDUxIDIxLDUwIDIxLDUwIEwyNSw1MCBMMjUsNDQgQzI1LDQ0IDI1LDM3IDMyLDM3IEw0OCwzNyBDNDgsMzcgNTQsMzcgNTQsMzEgTDU0LDE3IEM1NCwxNyA1NSw4IDQwLDhaIiBmaWxsPSIjMzc3NkFCIi8+CjxwYXRoIGQ9Ik00MCw3MiBDNTIsNzIgNTEsNjcgNTEsNjcgTDUxLDU3IEwzOSw1NyBMMzksNTQgTDU4LDU0IEM1OCw1NCA2NSw1NSA2NSw0MiBDNjUsMjkgNTksMzAgNTksMzAgTDU1LDMwIEw1NSwzNiBDNTUsMzYgNTUsNDMgNDgsNDMgTDMyLDQzIEMzMiw0MyAyNiw0MyAyNiw0OSBMMjYsNjMgQzI2LDYzIDI1LDcyIDQwLDcyWiIgZmlsbD0iI0ZGRDQzQiIvPgo8Y2lyY2xlIGN4PSIzNiIgY3k9IjE4IiByPSIzIiBmaWxsPSIjRkZGRkZGIi8+CjxjaXJjbGUgY3g9IjQ0IiBjeT0iNjIiIHI9IjMiIGZpbGw9IiMxZTI5M2IiLz4KPC9zdmc+" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">Segmentación: Bajo/Medio/Alto · Power Users</div><div class="project-tags"><span class="project-tag"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMWUyOTNiIi8+CjxwYXRoIGQ9Ik00MCw4IEMyOCw4IDI5LDEzIDI5LDEzIEwyOSwyMyBMNDEsMjMgTDQxLDI2IEwyMiwyNiBDMjIsMjYgMTUsMjUgMTUsMzggQzE1LDUxIDIxLDUwIDIxLDUwIEwyNSw1MCBMMjUsNDQgQzI1LDQ0IDI1LDM3IDMyLDM3IEw0OCwzNyBDNDgsMzcgNTQsMzcgNTQsMzEgTDU0LDE3IEM1NCwxNyA1NSw4IDQwLDhaIiBmaWxsPSIjMzc3NkFCIi8+CjxwYXRoIGQ9Ik00MCw3MiBDNTIsNzIgNTEsNjcgNTEsNjcgTDUxLDU3IEwzOSw1NyBMMzksNTQgTDU4LDU0IEM1OCw1NCA2NSw1NSA2NSw0MiBDNjUsMjkgNTksMzAgNTksMzAgTDU1LDMwIEw1NSwzNiBDNTUsMzYgNTUsNDMgNDgsNDMgTDMyLDQzIEMzMiw0MyAyNiw0MyAyNiw0OSBMMjYsNjMgQzI2LDYzIDI1LDcyIDQwLDcyWiIgZmlsbD0iI0ZGRDQzQiIvPgo8Y2lyY2xlIGN4PSIzNiIgY3k9IjE4IiByPSIzIiBmaWxsPSIjRkZGRkZGIi8+CjxjaXJjbGUgY3g9IjQ0IiBjeT0iNjIiIHI9IjMiIGZpbGw9IiMxZTI5M2IiLz4KPC9zdmc+" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">Python</span><span class="project-tag"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMTMwNzU0Ii8+CjxyZWN0IHg9IjIyIiB5PSIxMCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjM4IiByeD0iNiIgZmlsbD0iI0U3MDQ4OCIvPgo8cmVjdCB4PSIyMiIgeT0iNTQiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxNiIgcng9IjYiIGZpbGw9IiNFNzA0ODgiIG9wYWNpdHk9Ii41Ii8+CjxyZWN0IHg9IjQ2IiB5PSIzMiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjM4IiByeD0iNiIgZmlsbD0iI0U3MDQ4OCIvPgo8cmVjdCB4PSI0NiIgeT0iMTAiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxNiIgcng9IjYiIGZpbGw9IiNFNzA0ODgiIG9wYWNpdHk9Ii41Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI3NyIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI0ZGRkZGRiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPnBhbmRhczwvdGV4dD4KPC9zdmc+" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">Pandas</span><span class="project-tag">Seaborn</span><span class="project-tag"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiBmaWxsPSIjMWUyOTNiIi8+CjxwYXRoIGQ9Ik00MCw4IEMyOCw4IDI5LDEzIDI5LDEzIEwyOSwyMyBMNDEsMjMgTDQxLDI2IEwyMiwyNiBDMjIsMjYgMTUsMjUgMTUsMzggQzE1LDUxIDIxLDUwIDIxLDUwIEwyNSw1MCBMMjUsNDQgQzI1LDQ0IDI1LDM3IDMyLDM3IEw0OCwzNyBDNDgsMzcgNTQsMzcgNTQsMzEgTDU0LDE3IEM1NCwxNyA1NSw4IDQwLDhaIiBmaWxsPSIjMzc3NkFCIi8+CjxwYXRoIGQ9Ik00MCw3MiBDNTIsNzIgNTEsNjcgNTEsNjcgTDUxLDU3IEwzOSw1NyBMMzksNTQgTDU4LDU0IEM1OCw1NCA2NSw1NSA2NSw0MiBDNjUsMjkgNTksMzAgNTksMzAgTDU1LDMwIEw1NSwzNiBDNTUsMzYgNTUsNDMgNDgsNDMgTDMyLDQzIEMzMiw0MyAyNiw0MyAyNiw0OSBMMjYsNjMgQzI2LDYzIDI1LDcyIDQwLDcyWiIgZmlsbD0iI0ZGRDQzQiIvPgo8Y2lyY2xlIGN4PSIzNiIgY3k9IjE4IiByPSIzIiBmaWxsPSIjRkZGRkZGIi8+CjxjaXJjbGUgY3g9IjQ0IiBjeT0iNjIiIHI9IjMiIGZpbGw9IiMxZTI5M2IiLz4KPC9zdmc+" width="18" height="18" style="object-fit:contain;vertical-align:middle;border-radius:3px;display:inline-block;margin:0 3px 0 0;">Jupyter</span></div><a href="https://github.com/DataAnalist-DavidGRamos/Proyecto-6---An-lisis-de-una-empresa-de-telecomunicaciones" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
+    <div class="project-card"><div class="project-icon">🧪</div><div class="project-type">A/B Testing · Inferencia Estadística · Python</div><div class="project-name">P8 — A/B Testing: Priorización y Análisis Estadístico</div><p class="project-desc">Diseño y análisis completo de un experimento A/B para una plataforma digital. Priorización de hipótesis con frameworks ICE/RICE, pruebas de significancia estadística y decisiones basadas en evidencia.</p><div class="project-highlight">🔬 Prueba de hipótesis · p-value · Significancia estadística · ICE/RICE</div><div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">A/B Testing</span><span class="project-tag">Estadística</span><span class="project-tag">Pandas</span></div><a href="https://github.com/DataAnalist-DavidGRamos/Portfolio_Proyecto_8_AB_Testing" target="_blank" class="project-link"><i class="fab fa-github"></i> Ver en GitHub</a></div>
   </div>
 </div>
 </section>
@@ -742,20 +806,7 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border-light);display:flex;a
   </div>
 </div>
 </section>
-<div class="divider"></div>
 
-<section id="contacto" class="contact-section">
-<div class="container">
-  <div class="section-header reveal" style="justify-content:center;flex-direction:column;align-items:center;text-align:center;gap:.8rem"><span class="section-num">09</span><h2 class="section-title">Hablemos de <span>Datos</span></h2></div>
-  <p class="contact-intro reveal">¿Buscas a alguien que entienda el negocio <span>antes</span> de analizar los datos?</p>
-  <div class="contact-links reveal">
-    <a href="mailto:davidgramosr@outlook.com" class="contact-link"><i class="fas fa-envelope"></i>davidgramosr@outlook.com</a>
-    <a href="tel:+525620383341" class="contact-link"><i class="fas fa-phone"></i>56 2038 3341</a>
-    <a href="https://www.linkedin.com/in/david-g-ramos" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i>LinkedIn</a>
-    <a href="https://github.com/DataAnalist-DavidGRamos" target="_blank" class="contact-link"><i class="fab fa-github"></i>GitHub</a>
-  </div>
-</div>
-</section>
 
 <footer>
   <span class="f-mono">© 2026 David Germán Ramos Rodríguez</span>
@@ -1055,7 +1106,7 @@ function buildPBIChart(idx) {
   });
 
   /* ── Nav activa al hacer scroll ── */
-  var secIds = ['hero','experiencia','skills','proyectos','audit','educacion','contacto'];
+  var secIds = ['hero','experiencia','skills','proyectos','audit','educacion'];
   window.addEventListener('scroll', function() {
     var sy=window.scrollY, cur2=0;
     secIds.forEach(function(id,i){ var el=document.getElementById(id); if(el&&sy>=el.offsetTop-110) cur2=i; });
@@ -1080,8 +1131,8 @@ function buildPBIChart(idx) {
 
   /* ── Toggle idioma ES/EN ── */
   var isEs = true;
-  var navEs = ['Trayectoria','Skills','Proyectos','Auditoría','Formación','Contacto'];
-  var navEn = ['Experience','Skills','Projects','Audit','Education','Contact'];
+  var navEs = ['Trayectoria','Skills','Proyectos','Auditoría','Formación'];
+  var navEn = ['Experience','Skills','Projects','Audit','Education'];
   document.getElementById('langBtn').addEventListener('click', function() {
     isEs = !isEs;
     this.textContent = isEs ? 'EN' : 'ES';
@@ -1697,5 +1748,74 @@ window.addEventListener('load', function() {
   });
 })();
 </script>
+
+<!-- ── Floating Contact FAB ── -->
+<div id="fab-contact">
+  <!-- Sub-bubbles (rendered above main due to column-reverse) -->
+  <div class="fab-items" id="fab-items">
+
+    <!-- Email -->
+    <div class="fab-item">
+      <a href="mailto:davidgramosr@outlook.com" class="fab-em" aria-label="Email">
+        <i class="fas fa-envelope"></i>
+      </a>
+      <span class="fab-tip">✉ davidgramosr@outlook.com</span>
+    </div>
+
+    <!-- GitHub -->
+    <div class="fab-item">
+      <a href="https://github.com/DataAnalist-DavidGRamos" target="_blank" class="fab-gh" aria-label="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+      <span class="fab-tip">🐙 DataAnalist-DavidGRamos</span>
+    </div>
+
+    <!-- LinkedIn -->
+    <div class="fab-item">
+      <a href="https://www.linkedin.com/in/david-g-ramos" target="_blank" class="fab-li" aria-label="LinkedIn">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+      <span class="fab-tip">💼 linkedin · david-g-ramos</span>
+    </div>
+
+    <!-- WhatsApp (includes phone) -->
+    <div class="fab-item">
+      <a href="https://wa.me/525620383341?text=Hola%20David%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20contactarte." target="_blank" class="fab-wa" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+      <span class="fab-tip">💬 WhatsApp · +52 56 2038 3341</span>
+    </div>
+
+  </div>
+
+  <!-- Master bubble -->
+  <button id="fab-main" aria-label="Abrir contacto" onclick="fabToggle()">
+    <i id="fab-icon" class="fas fa-comment-dots"></i>
+  </button>
+</div>
+
+<script>
+(function(){
+  var isOpen = false;
+  window.fabToggle = function(){
+    isOpen = !isOpen;
+    var items = document.getElementById('fab-items');
+    var icon  = document.getElementById('fab-icon');
+    var btn   = document.getElementById('fab-main');
+    items.classList.toggle('open', isOpen);
+    icon.className  = isOpen ? 'fas fa-times' : 'fas fa-comment-dots';
+    btn.style.background = isOpen
+      ? 'linear-gradient(135deg,#4DA8DA,#1a6fa0)'
+      : 'linear-gradient(135deg,#C8A96E,#E2C88A)';
+    btn.style.color = '#fff';
+  };
+  document.addEventListener('click', function(e){
+    if(isOpen && !document.getElementById('fab-contact').contains(e.target)){
+      window.fabToggle();
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
